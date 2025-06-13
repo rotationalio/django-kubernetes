@@ -1,0 +1,28 @@
+# Library dependencies
+Django==5.2.3
+
+# Packaging dependencies
+# black==24.8.0
+# build==1.2.2.post1
+# packaging==25.0
+# pip==25.1.1
+# pyproject_hooks==1.2.0
+# setuptools==72.2.0
+# twine==6.0.0
+# wheel==0.44.0
+
+# Testing dependencies
+# pytest-cov==6.2.1
+# pytest-django==4.11.1
+# pytest-env==1.1.5
+# pytest-flakes==4.0.5
+# pytest==8.4.0
+
+# Subdependencies
+# asgiref==3.8.1
+# coverage==7.9.1
+# iniconfig==2.1.0
+# pyflakes==3.3.2
+# Pygments==2.19.1
+# pluggy==1.6.0
+# sqlparse==0.5.3
