@@ -1,6 +1,7 @@
 import logging
 
 from djk8s.conf import settings
+from djk8s.probes import NotReady, ReadinessProbe
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, HttpResponseServerError
 
@@ -36,6 +37,24 @@ class ProbeMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
 
+        # Readiness probes used to check if the application is ready to serve requests.
+        self.probes = [
+            Probe() for Probe in settings.DJK8S_READINESS_PROBES
+        ]
+
+        # Ensure all probes are instances of ReadinessProbe.
+        for probe in self.probes:
+            if not isinstance(probe, ReadinessProbe):
+                raise ImproperlyConfigured(
+                    f"probe {probe} is not an instance of ReadinessProbe."
+                )
+
+        # If no probes are configured, raise an error.
+        if not self.probes:
+            raise ImproperlyConfigured(
+                "no readiness probes configured for Django Kubernetes ProbeMiddleware."
+            )
+
         # Paths that the middleware will directly handle instead of passing to a view.
         self.handlers = {}
 
@@ -70,28 +89,9 @@ class ProbeMiddleware(object):
         caches and calls get_stats to check if the cache is online.
         """
         try:
-            from django.db import connections
-
-            for name in connections:
-                with connections[name].cursor() as cursor:
-                    cursor.execute("SELECT 1")
-                    if cursor.fetchone() is None:
-                        return UnavailableResponse(f"db: database '{name}' is not responding")
-        except Exception as e:
-            logger.exception(f"database readiness check failed: {str(e)}")
-            return UnavailableResponse("db: could not connect to database")
-
-        try:
-            from django.core.cache import caches
-            from django.core.cache.backends.memcached import BaseMemcachedCache
-
-            for cache in caches.all():
-                if isinstance(cache, BaseMemcachedCache):
-                    stats = cache.get_stats()
-                    if len(stats) != len(cache._servers):
-                        return UnavailableResponse("cache: memcache is not responding")
-        except Exception as e:
-            logger.exception(f"cache readiness check failed: {str(e)}")
-            return UnavailableResponse("cache: could not connect to cache")
+            for probe in self.probes:
+                probe.ready(request)
+        except NotReady as e:
+            return e.response()
 
         return HttpResponse("Ok", status=200, content_type="text/plain")
