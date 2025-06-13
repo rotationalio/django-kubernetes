@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=69.3"]
+requires = ["setuptools>=69.3", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
+dynamic = ["version"]
 name = "django-kubernetes"
-version = "0.1.0"
 dependencies = [
     "django>=5.0",
 ]
@@ -50,3 +50,7 @@ Documentation = "https://github.com/rotationalio/django-kubernetes"
 Repository = "https://github.com/rotationalio/django-kubernetes"
 Issues = "https://github.com/rotationalio/django-kubernetes/issues"
 Changelog = "https://github.com/rotationalio/django-kubernetes/releases"
+
+[tool.setuptools_scm]
+version_file = "djk8s/version.py"
+local_scheme = "no-local-version"
