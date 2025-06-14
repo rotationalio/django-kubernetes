@@ -25,9 +25,7 @@ class ReadinessView(View):
     @classproperty
     def probes(cls):
         if not hasattr(cls, "__probes"):
-            cls.__probes = [
-                Probe() for Probe in settings.DJK8S_READINESS_PROBES
-            ]
+            cls.__probes = [Probe() for Probe in settings.DJK8S_READINESS_PROBES]
         return cls.__probes
 
     @classonlymethod

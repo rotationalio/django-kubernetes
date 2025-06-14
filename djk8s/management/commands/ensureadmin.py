@@ -57,10 +57,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if not options["username"]:
-            raise CommandError("Username is required. Set DJANGO_ADMIN_USERNAME or use --username.")
+            raise CommandError(
+                "Username is required. Set DJANGO_ADMIN_USERNAME or use --username."
+            )
 
         if not options["password"]:
-            raise CommandError("Password is required. Set DJANGO_ADMIN_PASSWORD or use --password.")
+            raise CommandError(
+                "Password is required. Set DJANGO_ADMIN_PASSWORD or use --password."
+            )
 
         info = {
             self.username_field: options["username"],

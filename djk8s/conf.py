@@ -8,9 +8,7 @@ from django.utils.module_loading import import_string
 PREFIX = "DJK8S_"
 
 # All settings that are import strings should be imported when accessed.
-IMPORT_STRINGS = (
-    "DJK8S_READINESS_PROBES",
-)
+IMPORT_STRINGS = ("DJK8S_READINESS_PROBES",)
 
 
 @dataclass(frozen=True)

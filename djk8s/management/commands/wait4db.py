@@ -6,7 +6,9 @@ from django.db import DEFAULT_DB_ALIAS, connections
 from django.core.management.base import BaseCommand, CommandError
 
 
-def wait_for_database(timeout=180, stable=5, interval=1, database=DEFAULT_DB_ALIAS):
+def wait_for_database(
+    timeout=180, stable=5, interval=1, database=DEFAULT_DB_ALIAS, **kwargs
+):
     """
     Waits for the database to be ready and stable before returning.
 
@@ -35,7 +37,9 @@ def wait_for_database(timeout=180, stable=5, interval=1, database=DEFAULT_DB_ALI
                     raise TimeoutError("Could not establish database connection") from e
 
                 msg = str(e).strip()
-                sys.stderr.write(f"Database not ready: (cause: {msg}, elapsed: {elapsed}s\n")
+                sys.stderr.write(
+                    f"Database not ready: (cause: {msg}, elapsed: {elapsed}s\n"
+                )
                 sys.stderr.flush()
 
                 sleep(interval)
@@ -99,4 +103,3 @@ class Command(BaseCommand):
 
         if not options.get("database"):
             raise CommandError("Database must be specified.")
-

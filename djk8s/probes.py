@@ -66,9 +66,7 @@ class DatabaseProbe(ReadinessProbe):
                 with connections[name].cursor() as cursor:
                     cursor.execute("SELECT 1")
                     if cursor.fetchone() is None:
-                        raise NotReady(
-                            f"db: database '{name}' is not responding"
-                        )
+                        raise NotReady(f"db: database '{name}' is not responding")
         except Exception as e:
             logger.exception(f"database readiness check failed: {str(e)}")
             raise NotReady("db: could not connect to database")
