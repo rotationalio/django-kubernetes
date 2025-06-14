@@ -1,26 +1,7 @@
-import logging
-
 from djk8s.conf import settings
+from django.http import HttpResponse
 from djk8s.probes import NotReady, ReadinessProbe
 from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpResponse, HttpResponseServerError
-
-
-logger = logging.getLogger("djk8s.probe")
-
-
-class UnavailableResponse(HttpResponseServerError):
-    """
-    Returns a basic 503 Service Unavailable response with the specified message.
-    Used as a response to liveness and readiness probes.
-    """
-
-    def __init__(self, message):
-        super(HttpResponseServerError, self).__init__(
-            content=message,
-            status=503,
-            content_type="text/plain",
-        )
 
 
 class ProbeMiddleware(object):

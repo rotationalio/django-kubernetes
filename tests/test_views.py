@@ -3,34 +3,32 @@ from django.test import override_settings
 
 
 @override_settings(
-    ROOT_URLCONF="tests.nourls",
+   MIDDLEWARE=[]
 )
-class TestProbeMiddleware(TestCase):
+class TestViews(TestCase):
     """
-    Test the ProbeMiddleware to ensure it correctly handles liveness and readiness probes.
+    Test the views in djk8s.views.
     """
 
-    @override_settings(MIDDLEWARE=[])
-    def test_no_views(self):
-        # View tests won't work if views are enabled
+    @override_settings(ROOT_URLCONF="tests.nourls")
+    def test_no_middleware(self):
+        # View tests won't work if middleware is enabled
         for path in ["/livez", "/healthz", "/readyz"]:
             response = self.client.get(path)
-            self.assertEqual(
-                response.status_code, 404, f"Expected 404 for {path} without views"
-            )
+            self.assertEqual(response.status_code, 404, f"Expected 404 for {path} without middleware")
 
-    def test_ready_response(self):
-        response = self.client.get("/readyz")
+    def test_liveness_view(self):
+        response = self.client.get("/livez")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Ok")
 
-    def test_health_response(self):
+    def test_health_view(self):
         response = self.client.get("/healthz")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Ok")
 
-    def test_live_response(self):
-        response = self.client.get("/livez")
+    def test_readiness_view(self):
+        response = self.client.get("/readyz")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(), "Ok")
 
@@ -38,7 +36,7 @@ class TestProbeMiddleware(TestCase):
         DJK8S_READINESS_PROBES=[
             "djk8s.probes.DatabaseProbe",
             "djk8s.probes.MemcachedProbe",
-            "tests.probes.NeverReady"
+            "tests.probes.NeverReady",
         ]
     )
     def test_not_ready(self):
