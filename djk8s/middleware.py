@@ -19,9 +19,7 @@ class ProbeMiddleware(object):
         self.get_response = get_response
 
         # Readiness probes used to check if the application is ready to serve requests.
-        self.probes = [
-            Probe() for Probe in settings.DJK8S_READINESS_PROBES
-        ]
+        self.probes = [Probe() for Probe in settings.DJK8S_READINESS_PROBES]
 
         # Ensure all probes are instances of ReadinessProbe.
         for probe in self.probes:

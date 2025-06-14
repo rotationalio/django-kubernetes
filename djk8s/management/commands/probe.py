@@ -25,7 +25,8 @@ class Command(BaseCommand):
             )
 
         parser.add_argument(
-            "-q", "--quiet",
+            "-q",
+            "--quiet",
             action="store_true",
             default=False,
             help="Suppress output for the probe check",
@@ -50,9 +51,7 @@ class Command(BaseCommand):
 
     def readyz(self, quiet=False):
         # Perform readiness checks
-        probes = [
-            Probe() for Probe in settings.DJK8S_READINESS_PROBES
-        ]
+        probes = [Probe() for Probe in settings.DJK8S_READINESS_PROBES]
 
         # Ensure all probes are instances of ReadinessProbe.
         for probe in probes:
@@ -72,7 +71,7 @@ class Command(BaseCommand):
                 probe.ready(None)  # Pass None as request since we don't have one
         except NotReady as e:
             if not quiet:
-                self.stdout.write(str(e)+"\n")
+                self.stdout.write(str(e) + "\n")
             sys.exit(1)
 
         if not quiet:

@@ -1,5 +1,5 @@
 # Library dependencies
-Django==5.2.3
+Django>=5.0.0
 
 # Packaging dependencies
 # black==25.1.0
