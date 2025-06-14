@@ -1,8 +1,9 @@
 import os
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.db import DEFAULT_DB_ALIAS, connections
 from django.core.management.base import BaseCommand, CommandError
-from django.db import DEFAULT_DB_ALIAS, connections, ValidationError
 from django.contrib.auth.password_validation import validate_password
 
 
@@ -67,9 +68,9 @@ class Command(BaseCommand):
             )
 
         info = {
-            self.username_field: options["username"],
+            self.username_field.name: options["username"],
             self.password_field: options["password"],
-            self.email_field: options["email"],
+            self.email_field.name: options["email"],
         }
 
         # Validate the password
@@ -82,7 +83,7 @@ class Command(BaseCommand):
 
         # Check if the user already exists, create if not.
         try:
-            db.get(username=info[self.username_field])
+            db.get(username=info[self.username_field.name])
             self.stdout.write("Admin user already exists, service is ready.")
         except self.UserModel.DoesNotExist:
             db.create_superuser(**info)
