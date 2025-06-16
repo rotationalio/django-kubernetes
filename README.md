@@ -27,6 +27,6 @@ That's where this package comes in, it provides the following helpers to make yo
 - `./manage.py probe`: a CLI version of the probes with `--live`, `--health`, and `--ready` checks that can be used by Kubernetes probe `exec` commands.
 - `./manage.py wait4db`: sleeps until the database is ready and available
 - `./manage.py ensureadmin`: reads environment variables for an admin user and creates that super user if the record does not already exist in the database.
+- `./manage.py lockedmigrate`: uses a postgres advisory lock to ensure migration safety across multiple processes; useful for a multi-replica deployment with a migrate init container.
 
 More documentation coming soon!
-
