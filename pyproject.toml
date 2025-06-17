@@ -47,7 +47,7 @@ keywords = [
 
 [project.urls]
 Homepage = "https://rotational.io/"
-Documentation = "https://github.com/rotationalio/django-kubernetes"
+Documentation = "https://django-kubernetes.readthedocs.io/"
 Repository = "https://github.com/rotationalio/django-kubernetes"
 Issues = "https://github.com/rotationalio/django-kubernetes/issues"
 Changelog = "https://github.com/rotationalio/django-kubernetes/releases"
