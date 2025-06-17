@@ -1,5 +1,8 @@
 # Django Kubernetes
 
+[![Tests](https://github.com/rotationalio/django-kubernetes/actions/workflows/tests.yaml/badge.svg)](https://github.com/rotationalio/django-kubernetes/actions/workflows/tests.yaml)
+[![Documentation Status](https://readthedocs.org/projects/django-kubernetes/badge/?version=latest)](http://django-kubernetes.readthedocs.io/en/latest/?badge=latest)
+
 Middleware and Views for Kubernetes liveness and readiness probes and Django management commands for Kubernetes jobs such as waiting for the database to be ready or ensuring an admin user exists or is created from environment variables.
 
 Let's face it; running a Django app on a Kubernetes cluster is a bit difficult - Django was built by folks who were running it on virtual machines or even bare metal hardware! They expected a shell environment available to them to be able to run management commands and influence how Django started up when in production.
@@ -29,4 +32,4 @@ That's where this package comes in, it provides the following helpers to make yo
 - `./manage.py ensureadmin`: reads environment variables for an admin user and creates that super user if the record does not already exist in the database.
 - `./manage.py lockedmigrate`: uses a postgres advisory lock to ensure migration safety across multiple processes; useful for a multi-replica deployment with a migrate init container.
 
-More documentation coming soon!
+See the [documentation](https://django-kubernetes.readthedocs.io/en/latest/) for more on how to get started and use this app in your Django project.

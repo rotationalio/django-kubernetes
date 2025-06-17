@@ -16,10 +16,6 @@ class AppSettings(object):
     """
     This class defines the default settings for the djk8s app. These settings can be
     overridden using similar names in the Django settings module.
-
-    Access this instance as ``djk8s.conf.settings`` to ensure that you can get the
-    default values for the django kubernetes app without them specifically being set
-    in the Django settings module.
     """
 
     DJK8S_READY_PATHS: Sequence[str] = ("/readyz",)
