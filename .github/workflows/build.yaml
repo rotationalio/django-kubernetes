@@ -25,6 +25,7 @@ jobs:
       - name: Build Distribution
         run: |
           python -m build
+
   docs:
     name: Build Documentation
     runs-on: ubuntu-latest
