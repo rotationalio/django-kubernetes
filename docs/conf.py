@@ -7,18 +7,25 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 import os
-import sys
 
-from pathlib import Path
+try:
+    import djk8s.version
+except ImportError:
 
-# Add the project root to the system path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    import sys
+    import pathlib
+
+    # Add the project root to the system path
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+
+    import djk8s.version
 
 
 project = 'Django Kubernetes'
 copyright = '2025, Rotational Labs'
 author = 'Rotational Labs'
-release = 'v1.0.0'
+version = djk8s.version.__version__
+release = 'v' + djk8s.version.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

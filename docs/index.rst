@@ -16,5 +16,8 @@ That's where this package comes in, it provides middleware and views for Kuberne
    :maxdepth: 2
    :caption: Contents:
 
-   api/index
+   setup
+   settings
+   probes
+   api
 
