@@ -30,6 +30,9 @@ class AppSettings(object):
     )
     """A list of readiness probes to check before responding to a readiness request."""
 
+    DJK8S_MIGRATE_LOCK_ID: int = 1000
+    """The ID of the lock used to prevent multiple migrations from running at the same time."""
+
     def __getattribute__(self, name: str) -> any:
         """
         Check if a Django project setting should override the app default.
