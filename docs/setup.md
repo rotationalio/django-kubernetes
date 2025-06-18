@@ -9,7 +9,7 @@ $ pip install django-kubernetes
 Once you've installed the dependency from PyPI you'll need to add the app to your `INSTALLED_APPS` Django settings; this will enable the management commands to be run from your `manage.py` file.
 
 ```python
-# Add 'mozilla_django_oidc' to INSTALLED_APPS
+# Add 'djk8s' to INSTALLED_APPS
 INSTALLED_APPS = (
     # ...
     'djk8s',

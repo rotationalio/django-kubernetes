@@ -19,5 +19,6 @@ That's where this package comes in, it provides middleware and views for Kuberne
    setup
    settings
    probes
+   commands
    api
 
